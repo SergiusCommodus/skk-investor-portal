@@ -14,6 +14,7 @@ export function FirmIntegrations() {
   const [text, setText] = useState('');
   const [tol, setTol] = useState(0.5);
   const [res, setRes] = useState<Recon | null>(null);
+  const [preview, setPreview] = useState<{ file: string; text: string } | null>(null);
   const file = useRef<HTMLInputElement>(null);
 
   const sync = async () => {
@@ -38,7 +39,11 @@ export function FirmIntegrations() {
 
   const run = (t = text) => setRes(reconcile(t, tol));
   const onFile = async (f?: File) => { if (!f) return; const t = await f.text(); setText(t); run(t); };
-  const exp = (k: ExportKey) => { download(EXPORTS[k].file, EXPORTS[k].build()); toast(`${EXPORTS[k].label} file created`, 'info'); };
+  const exp = (k: ExportKey) => {
+    const text = EXPORTS[k].build();
+    try { download(EXPORTS[k].file, text); } catch { /* downloads can be blocked in embedded viewers */ }
+    setPreview({ file: EXPORTS[k].file, text });
+  };
 
   return (
     <Page>
@@ -159,6 +164,13 @@ export function FirmIntegrations() {
           </ol>
         </div>
       </Reveal>
+
+      <Modal open={!!preview} onClose={() => setPreview(null)} wide>
+        <ModalHead icon="download" title={preview?.file || ''} sub="If the file did not download, copy the text below into a .csv file." onClose={() => setPreview(null)} />
+        <div className="modal-body">
+          <textarea className="input" readOnly style={{ minHeight: 260, fontFamily: 'ui-monospace, monospace', fontSize: 12 }} value={preview?.text || ''} onFocus={(e) => e.currentTarget.select()} aria-label="CSV contents" />
+        </div>
+      </Modal>
 
       <Modal open={open} onClose={() => setOpen(false)}>
         <ModalHead icon="lock" title="Connect Carta" sub="Demo only. No credentials are collected." onClose={() => setOpen(false)} />
