@@ -161,7 +161,7 @@ h3.card-title { font-size: 19px; font-weight: 400; letter-spacing: -0.02em; colo
   background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue) 55%, #1a6fc2 100%); color: #fff; border: 0;
   overflow: hidden; padding: 24px;
 }
-.hero .mosaic-bg { position: absolute; inset: 0; opacity: 0.16; pointer-events: none; }
+.hero .mosaic-bg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.16; pointer-events: none; }
 .hero > * { position: relative; }
 .hero .eyebrow { color: rgba(255, 255, 255, 0.72); }
 .hero-value { font-size: 40px; font-weight: 300; letter-spacing: -0.04em; line-height: 1.1; margin: 6px 0 6px; }
