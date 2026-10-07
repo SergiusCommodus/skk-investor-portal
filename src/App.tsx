@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
 import { useCallback, useEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Gate, gateOn, unlocked } from './components/Gate';
 import { Intro } from './components/Intro';
 import { RequestProvider } from './components/Requests';
 import { Shell } from './components/Shell';
@@ -54,6 +55,12 @@ function Routed() {
 }
 
 export default function App() {
+  const [ok, setOk] = useState(!gateOn() || unlocked());
+  if (!ok) return <Gate onOk={() => setOk(true)} />;
+  return <Inner />;
+}
+
+function Inner() {
   const [intro, setIntro] = useState(!seen());
   const done = useCallback(() => { markSeen(); setIntro(false); }, []);
   useEffect(() => {
