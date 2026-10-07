@@ -45,6 +45,7 @@ export function Shell({ children }: { children: ReactNode }) {
     { to: '/firm/investors', label: 'Investors', icon: 'users' },
     { to: '/firm/calls', label: 'Capital calls', icon: 'flow' },
     { to: '/firm/publish', label: 'Publish update', icon: 'megaphone' },
+    { to: '/firm/integrations', label: 'Data sync', icon: 'refresh' },
   ];
   const items = firm ? firmNav : investorNav;
 

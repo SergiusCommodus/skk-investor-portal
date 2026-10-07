@@ -4,7 +4,7 @@ import { Mosaic } from '../components/Brand';
 import { CountUp, Donut, LineChart } from '../components/Charts';
 import { Icon } from '../components/Icon';
 import { REQ_TYPES, useRequest } from '../components/Requests';
-import { LogoTile, Page, Reveal } from '../components/ui';
+import { LogoTile, Page, Reveal, SyncBadge } from '../components/ui';
 import { AS_OF_LABEL, CAPITAL_CALL, ENTITIES, HOLDINGS, INVESTOR, NAV_HISTORY, OPPORTUNITIES, TEAM } from '../data/portfolio';
 import { bySector, holdingStats, portfolioStats, QTR_CHANGE, QTR_PCT, TOTAL } from '../lib/calc';
 import { compact, date, multiple, pct, relTime, usd } from '../lib/format';
@@ -44,7 +44,7 @@ export function Overview() {
       <Reveal i={0}>
         <div className="between wrap" style={{ marginBottom: 22, alignItems: 'flex-end' }}>
           <div>
-            <div className="eyebrow" style={{ marginBottom: 8 }}>Valuations as of {AS_OF_LABEL}</div>
+            <div className="eyebrow row wrap" style={{ marginBottom: 8, gap: 10 }}>Valuations as of {AS_OF_LABEL}<SyncBadge /></div>
             <h1 className="page">{greet()}, {INVESTOR.first}</h1>
           </div>
           <div className="row">

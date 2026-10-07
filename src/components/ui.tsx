@@ -4,6 +4,8 @@ import { createPortal } from 'react-dom';
 import { Holding } from '../data/portfolio';
 import { ReqStatus } from '../data/content';
 import { Icon } from './Icon';
+import { relTime } from '../lib/format';
+import { useStore } from '../store';
 
 export function Page({ children }: { children: ReactNode }) {
   return (
@@ -105,4 +107,11 @@ export function Success({ title, body, onClose, cta }: { title: string; body: Re
       </div>
     </div>
   );
+}
+
+/** Shows only when the Carta connection has been enabled in the SKK team view. */
+export function SyncBadge() {
+  const { carta } = useStore();
+  if (!carta.connected) return null;
+  return <span className="tag green" title="Figures are read from the Carta record (simulated in this demo)">Synced from Carta{carta.lastSync ? ' · ' + relTime(carta.lastSync) : ''}</span>;
 }

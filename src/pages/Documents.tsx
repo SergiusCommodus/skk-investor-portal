@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Icon } from '../components/Icon';
 import { useRequest } from '../components/Requests';
-import { Modal, ModalHead, Page, PageHead, Reveal } from '../components/ui';
+import { Modal, ModalHead, Page, PageHead, Reveal, SyncBadge } from '../components/ui';
 import { DOCS, Doc, DocCategory } from '../data/content';
 import { AS_OF_LABEL, ENTITIES, HOLDINGS, INVESTOR } from '../data/portfolio';
 import { holdingStats } from '../lib/calc';
@@ -41,7 +41,7 @@ export function Documents() {
 
   return (
     <Page>
-      <PageHead eyebrow="Document vault" title="Documents" sub={`${DOCS.length} documents across 3 entities · encrypted and available any time`}
+      <PageHead eyebrow="Document vault" title="Documents" sub={<>{`${DOCS.length} documents across 3 entities · encrypted and available any time`} <SyncBadge /></>}
         actions={<button className="btn" onClick={() => openRequest({ type: 'Paperwork' })}><Icon name="plus" />Request a document</button>} />
       <Reveal i={0}>
         <div className="card" style={{ padding: 14, marginBottom: 16 }}>

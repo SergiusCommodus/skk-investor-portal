@@ -24,6 +24,7 @@ export function TearSheet() {
         <button className="btn" onClick={() => window.print()}><Icon name="download" />Save as PDF</button>
       </div>
       <div className="sheet card" style={{ maxWidth: 860, margin: '0 auto', padding: 0, overflow: 'hidden', fontSize: 12 }}>
+        <h1 style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>{h.name} tear sheet</h1>
         <div style={{ background: 'linear-gradient(120deg,#023a75,#03509F 60%,#1a6fc2)', color: '#fff', padding: '22px 28px', WebkitPrintColorAdjust: 'exact', printColorAdjust: 'exact' }}>
           <div className="between wrap">
             <Wordmark size="sm" light />

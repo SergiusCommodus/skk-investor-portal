@@ -17,6 +17,7 @@ Every investor, company, person and figure in it is fictional. No credentials ar
 - Ask SKK: plain English questions answered from the portfolio data
 
 **SKK team view (switch from the sidebar or avatar menu)**
+- Data sync: simulated Carta connection and sync log, scope map, CSV exports, and a tie out tool that flags differences against an uploaded valuation file (see INTEGRATION.md)
 - Firm overview, request inbox (advancing a request notifies the investor), investors, capital call tracker, publish an update to every investor in a deal
 
 ## Run it
@@ -35,10 +36,15 @@ Demo state (requests, messages, read status) is saved in the browser; use **Rese
 Colors (#03509F, #57B7E8, #80848A, #C7C8CD) and the Raleway typeface follow skk-llc.com. The header uses a text wordmark.
 To use SKK's official logo, add the file to `public/brand/` and set `logoUrl` in `src/brand.ts`.
 
+## Carta
+
+See [INTEGRATION.md](INTEGRATION.md). The portal does not call Carta in this demo; it includes the data contract, scope map, CSV exports and a reconciliation tool.
+
 ## Where things live
 
 - `src/data/portfolio.ts`: holdings, tear sheet content, cash flows, team, opportunities
 - `src/data/content.ts`: documents, updates, messages, requests
+- `src/integrations/carta.ts`: Carta scope map, source interface, CSV export and tie out logic
 - `src/lib/calc.ts`: IRR (XIRR), multiples and portfolio math
 - `src/pages/`: every screen
 - `src/components/`: intro animation, triangle mosaic, charts, request flows, layout

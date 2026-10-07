@@ -12,15 +12,18 @@ import { Overview } from './pages/Overview';
 import { Ask, Messages, Requests } from './pages/Service';
 import { TearSheet } from './pages/TearSheet';
 import { Welcome } from './pages/Welcome';
-import { StoreProvider } from './store';
+import { StoreProvider, useStore } from './store';
+import { FirmIntegrations } from './pages/Integrations';
 
 const seen = () => { try { return sessionStorage.getItem('skk-intro') === '1'; } catch { return false; } };
 const markSeen = () => { try { sessionStorage.setItem('skk-intro', '1'); } catch { /* ignore */ } };
 
 function Routed() {
   const loc = useLocation();
+  const { role } = useStore();
   useEffect(() => { window.scrollTo(0, 0); }, [loc.pathname]);
   if (loc.pathname === '/welcome') return <Welcome />;
+  if (loc.pathname.startsWith('/firm') && role !== 'firm') return <Navigate to="/" replace />;
   return (
     <RequestProvider>
       <Shell>
@@ -41,6 +44,7 @@ function Routed() {
           <Route path="/firm/requests" element={<FirmRequests />} />
           <Route path="/firm/investors" element={<FirmInvestors />} />
           <Route path="/firm/calls" element={<FirmCalls />} />
+          <Route path="/firm/integrations" element={<FirmIntegrations />} />
           <Route path="/firm/publish" element={<FirmPublish />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

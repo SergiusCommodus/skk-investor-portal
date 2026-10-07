@@ -3,6 +3,7 @@ import { REQUESTS, REQ_STEPS, ServiceRequest, THREADS, Thread, UPDATES, Update, 
 
 export type Role = 'investor' | 'firm';
 export type Toast = { id: number; text: string; tone?: 'ok' | 'info' };
+export type CartaState = { connected: boolean; connectedAt?: string; lastSync?: string; log: { at: string; text: string }[] };
 export type Notice = { id: string; at: string; text: string; to: Role; link?: string; read?: boolean };
 
 type State = {
@@ -16,6 +17,7 @@ type State = {
   entity: string;
   typing: string | null;
   seq: number;
+  carta: CartaState;
 };
 
 const now = () => new Date().toISOString();
@@ -36,6 +38,7 @@ const initial: State = {
   entity: 'All entities',
   typing: null,
   seq: 1060,
+  carta: { connected: false, log: [] },
 };
 
 type Action =
@@ -51,6 +54,8 @@ type Action =
   | { t: 'publish'; update: Omit<Update, 'id' | 'date'> }
   | { t: 'toast'; toast: Toast }
   | { t: 'untoast'; id: number }
+  | { t: 'carta'; connected: boolean }
+  | { t: 'cartaLog'; text: string; done?: boolean }
   | { t: 'reset' };
 
 const OWNERS: Record<string, string> = {
@@ -106,6 +111,16 @@ function reducer(s: State, a: Action): State {
     }
     case 'toast': return { ...s, toasts: [...s.toasts, a.toast] };
     case 'untoast': return { ...s, toasts: s.toasts.filter((t) => t.id !== a.id) };
+    case 'carta': {
+      const at = now();
+      return a.connected
+        ? { ...s, carta: { connected: true, connectedAt: at, lastSync: s.carta.lastSync, log: [{ at, text: 'Connected to Carta (simulated authorization)' }, ...s.carta.log] } }
+        : { ...s, carta: { connected: false, log: [{ at, text: 'Disconnected from Carta' }, ...s.carta.log] } };
+    }
+    case 'cartaLog': {
+      const at = now();
+      return { ...s, carta: { ...s.carta, lastSync: a.done ? at : s.carta.lastSync, log: [{ at, text: a.text }, ...s.carta.log].slice(0, 40) } };
+    }
     case 'reset': return { ...initial, role: s.role };
   }
 }
@@ -114,7 +129,7 @@ const KEY = 'skk-demo-state-v1';
 function load(): State {
   try {
     const raw = window.localStorage.getItem(KEY);
-    if (raw) return { ...initial, ...JSON.parse(raw), toasts: [], typing: null };
+    if (raw) { const p = JSON.parse(raw); return { ...initial, ...p, carta: { ...initial.carta, ...(p.carta || {}) }, toasts: [], typing: null }; }
   } catch { /* storage unavailable: run in memory */ }
   return initial;
 }

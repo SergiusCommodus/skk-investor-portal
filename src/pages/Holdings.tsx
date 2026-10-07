@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Columns, CountUp, LineChart } from '../components/Charts';
 import { Icon } from '../components/Icon';
 import { useRequest } from '../components/Requests';
-import { LogoTile, Page, PageHead, Reveal } from '../components/ui';
+import { LogoTile, Page, PageHead, Reveal, SyncBadge } from '../components/ui';
 import { DOCS } from '../data/content';
 import { AS_OF_LABEL, CAPITAL_CALL, ENTITIES, HOLDINGS, Holding } from '../data/portfolio';
 import { holdingStats, portfolioStats } from '../lib/calc';
@@ -24,7 +24,7 @@ export function Holdings() {
 
   return (
     <Page>
-      <PageHead eyebrow={`As of ${AS_OF_LABEL}`} title="Holdings" sub={`${list.length} investments · ${usd(tot.value)} current value · ${multiple(tot.moic)} total value multiple`} />
+      <PageHead eyebrow={`As of ${AS_OF_LABEL}`} title="Holdings" sub={<>{`${list.length} investments · ${usd(tot.value)} current value · ${multiple(tot.moic)} total value multiple`} <SyncBadge /></>} />
       <Reveal i={0}>
         <div className="between wrap" style={{ marginBottom: 16 }}>
           <div className="chips">

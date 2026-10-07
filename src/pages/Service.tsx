@@ -110,7 +110,7 @@ export function Requests() {
         <div className="card hero" style={{ padding: '28px 26px' }}>
           <Mosaic className="mosaic-bg" cols={20} rows={6} cell={40} seed={44} weights={[0.2, 0.28, 0.08, 0.04, 0.4]} />
           <div className="eyebrow">Concierge</div>
-          <div style={{ fontSize: 'clamp(26px,4vw,36px)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.15, marginTop: 8, maxWidth: 620 }}>White glove service. Ask once and your team handles the rest.</div>
+          <h1 style={{ fontSize: 'clamp(26px,4vw,36px)', fontWeight: 300, letterSpacing: '-0.03em', lineHeight: 1.15, margin: '8px 0 0', maxWidth: 620 }}>White glove service. Ask once and your team handles the rest.</h1>
           <div className="row wrap mt16" style={{ gap: 10 }}>
             <span className="pill"><Icon name="check" size={14} />Typical response under 4 hours</span>
             <span className="pill"><Icon name="users" size={14} />Dedicated team of three</span>
