@@ -27,11 +27,14 @@ export function Documents() {
     (entity === 'All entities' || !d.entity || d.entity === entity) &&
     (!q || (d.title + d.summary).toLowerCase().includes(q.toLowerCase()))), [cat, entity, q]);
 
+  const [limit, setLimit] = useState(20);
+  useEffect(() => { setLimit(20); }, [cat, entity, q]);
+  const shown = list.slice(0, limit);
   const groups = useMemo(() => {
     const m = new Map<string, Doc[]>();
-    list.forEach((d) => { const k = monthYear(d.date); m.set(k, [...(m.get(k) || []), d]); });
+    shown.forEach((d) => { const k = monthYear(d.date); m.set(k, [...(m.get(k) || []), d]); });
     return [...m.entries()];
-  }, [list]);
+  }, [shown]);
 
   const setOpen = (d: Doc | null) => {
     const p = new URLSearchParams(params);
@@ -93,6 +96,11 @@ export function Documents() {
           </>
         )}
       </Modal>
+      {list.length > shown.length && (
+        <div className="row mt16" style={{ justifyContent: 'center' }}>
+          <button className="btn ghost" onClick={() => setLimit((n) => n + 20)}>Show {Math.min(20, list.length - shown.length)} more of {list.length - shown.length} remaining</button>
+        </div>
+      )}
     </Page>
   );
 }

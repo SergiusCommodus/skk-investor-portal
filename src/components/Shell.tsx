@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from '../motion';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { DOCS } from '../data/content';
@@ -69,6 +69,7 @@ export function Shell({ children }: { children: ReactNode }) {
 
   return (
     <div>
+      <a href="#main" className="skip-link" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); }}>Skip to content</a>
       <div className="demo-strip"><b>Demo</b>Concept prototype · all investors, companies and figures are fictional</div>
       <div className="app">
         <aside className="side">
@@ -145,7 +146,7 @@ export function Shell({ children }: { children: ReactNode }) {
             </div>
           </header>
 
-          <main className="content">{children}</main>
+          <main id="main" className="content" tabIndex={-1}>{children}</main>
         </div>
       </div>
 

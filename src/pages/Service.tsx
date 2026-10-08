@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from '../motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mosaic } from '../components/Brand';
@@ -141,7 +141,7 @@ export function Requests() {
           {list.map((r) => {
             const idx = REQ_STEPS.indexOf(r.status as (typeof REQ_STEPS)[number]);
             return (
-              <motion.div key={r.id} layout initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="card">
+              <motion.div key={r.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="card">
                 <div className="between wrap" style={{ alignItems: 'flex-start' }}>
                   <div style={{ minWidth: 0 }}>
                     <div className="row wrap" style={{ gap: 8 }}><span className="muted tiny num" style={{ fontWeight: 700 }}>{r.id}</span><span className="tag gray">{r.type}</span><StatusTag s={r.status} /></div>

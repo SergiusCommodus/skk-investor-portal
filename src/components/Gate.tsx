@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from '../motion';
 import { useRef, useState } from 'react';
 import { Wordmark, Mosaic } from './Brand';
 import { Icon } from './Icon';

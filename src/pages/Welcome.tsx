@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from '../motion';
 import { useNavigate } from 'react-router-dom';
 import { Mosaic, Wordmark } from '../components/Brand';
 import { Icon } from '../components/Icon';

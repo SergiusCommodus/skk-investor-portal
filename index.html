@@ -4,14 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#03509F" />
+    <meta name="color-scheme" content="light" />
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="Concept demo of a white glove investor portal for Shepherd Kaplan Krochuk. All investors, companies and figures are fictional." />
+    <meta property="og:title" content="SKK Investor Portal · Demo" />
+    <meta property="og:description" content="Private concept demo. Every investment, document and conversation in one place." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <title>SKK Investor Portal · Demo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      /* First paint before any script runs: brand background and a quiet pulse, no white flash. */
+      html { background: #03509F; }
+      body { margin: 0; }
+      #root:empty { min-height: 100dvh; background: linear-gradient(140deg, #023a75, #03509F 55%, #1a6fc2); }
+      #root:empty::after { content: ''; position: fixed; left: 50%; top: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; border: 2px solid rgba(255,255,255,.25); border-top-color: #fff; animation: skk-spin 1s linear infinite; }
+      @keyframes skk-spin { to { transform: rotate(360deg); } }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <noscript><div style="font-family: system-ui, sans-serif; color: #fff; padding: 40px; text-align: center">This demo needs JavaScript turned on.</div></noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

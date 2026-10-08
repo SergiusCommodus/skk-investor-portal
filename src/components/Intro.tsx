@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from '../motion';
 import { useEffect, useState } from 'react';
 import { BRAND } from '../brand';
 import { Mosaic } from './Brand';

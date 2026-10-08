@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from '../motion';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LineChart } from '../components/Charts';
@@ -84,7 +84,7 @@ export function FirmRequests() {
             const next = r.status === 'Completed' ? null : REQ_STEPS[Math.min(REQ_STEPS.length - 1, (idx < 0 ? 1 : idx) + 1)];
             const h = HOLDINGS.find((x) => x.id === r.holdingId);
             return (
-              <motion.div key={r.id} layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="card">
+              <motion.div key={r.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="card">
                 <div className="between wrap" style={{ alignItems: 'flex-start' }}>
                   <div className="row" style={{ alignItems: 'flex-start' }}>
                     {h ? <LogoTile h={h} /> : <div className="avatar">JE</div>}

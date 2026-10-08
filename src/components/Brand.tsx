@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { BRAND } from '../brand';
 
 /** Text wordmark. Swaps to the official logo when BRAND.logoUrl is set. */
@@ -64,11 +64,19 @@ export function Mosaic({
     return tris.map(() => pick(r(), PALETTE, weights));
   });
 
+  const ref = useRef<SVGSVGElement>(null);
   useEffect(() => {
     if (!animate) return;
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (reduce) return;
+    // Only shimmer while on screen and the tab is visible; saves CPU and battery on phones.
+    let visible = true;
+    const io = typeof IntersectionObserver !== 'undefined' && ref.current
+      ? new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.05 })
+      : null;
+    if (io && ref.current) io.observe(ref.current);
     const id = setInterval(() => {
+      if (!visible || document.visibilityState === 'hidden') return;
       setColors((prev) => {
         const next = prev.slice();
         const n = Math.max(3, Math.floor(prev.length * 0.04));
@@ -76,11 +84,11 @@ export function Mosaic({
         return next;
       });
     }, 900);
-    return () => clearInterval(id);
+    return () => { clearInterval(id); io?.disconnect(); };
   }, [animate, weights]);
 
   return (
-    <svg className={'mosaic ' + (className || '')} style={style} viewBox={`0 0 ${cols * cell} ${rows * cell}`} preserveAspectRatio="xMidYMid slice" aria-hidden>
+    <svg ref={ref} className={'mosaic ' + (className || '')} style={style} viewBox={`0 0 ${cols * cell} ${rows * cell}`} preserveAspectRatio="xMidYMid slice" aria-hidden>
       {tris.map((t, i) => (
         <polygon
           key={i}
